@@ -1,6 +1,8 @@
 # Either for Unity
 A Serializable union-esque type for Unity.
 
+![Either Demo Screenshot](https://user-images.githubusercontent.com/38191432/159367481-41640d75-8610-41f0-9cec-003de6d0a36f.png)
+
 ```cs
 using Extra.Either;
 using UnityEngine;
