@@ -1,6 +1,26 @@
-# Either-for-Unity
+# Either for Unity
 A Serializable union-esque type for Unity.
- 
+
+```cs
+using Extra.Either;
+using UnityEngine;
+
+public class PlayerDefenseCalculator : MonoBehaviour
+{
+    [SerializeField] private Either<float, FloatScriptableObject> defenseStat;
+
+    public float EvaluateDamage(float attackPower)
+    {
+        var defense = defenseStat.Match(
+            f => f,
+            so => so.FloatValue
+        );
+
+        return attackPower - defense;
+    }
+}
+```
+
 ## How do I add this to Unity?
 It's easy!
 
