@@ -1,0 +1,14 @@
+{
+	"name": "com.bgs.either",
+	"version": "0.0.1",
+	"displayName": "Either",
+	"description": "A Serializable union-esque type for Unity.",
+	"unity": "2021.1",
+	"dependencies": {},
+	"keywords": ["union, serializable, unity"],
+	"author": {
+		"name": "Ben Sulzinsky",
+		"email": "bsulzinsky@gmail.com",
+		"url": "http://www.bgsmusic.com"
+	}
+}
