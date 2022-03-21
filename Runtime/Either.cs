@@ -88,6 +88,27 @@ namespace Extra.Either
         }
 
         /// <summary>
+        /// Operates on the stored value of the currently selected type.
+        /// </summary>
+        /// <param name="ifT0">If the first type is selected, operates on that value.</param>
+        /// <param name="ifT1">If the second type is selected, operates on that value.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public void Do(Action<T0> ifT0, Action<T1> ifT1)
+        {
+            switch (Index)
+            {
+                case 0:
+                    ifT0(AsT0);
+                    break;
+                case 1:
+                    ifT1(AsT1);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException($"Index {Index} is out of range; this Either only has {TypeCount} types.");
+            }
+        }
+
+        /// <summary>
         /// Converts the stored value of the currently selected type to a value of type T.
         /// </summary>
         /// <param name="ifT0">If the first type is selected, converts that value to type T.</param>
@@ -105,6 +126,9 @@ namespace Extra.Either
                     $"Index {Index} is out of range; this Either only has {TypeCount} types.")
             };
         }
+
+        public static implicit operator T0(Either<T0, T1> either) => either.AsT0;
+        public static implicit operator T1(Either<T0, T1> either) => either.AsT1;
     }
 
     [Serializable]
@@ -159,6 +183,31 @@ namespace Extra.Either
         }
 
         /// <summary>
+        /// Operates on the stored value of the currently selected type.
+        /// </summary>
+        /// <param name="ifT0">If the first type is selected, operates on that value.</param>
+        /// <param name="ifT1">If the second type is selected, operates on that value.</param>
+        /// <param name="ifT2">If the third type is selected, operates on that value.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public void Do(Action<T0> ifT0, Action<T1> ifT1, Action<T2> ifT2)
+        {
+            switch (Index)
+            {
+                case 0:
+                    ifT0(AsT0);
+                    break;
+                case 1:
+                    ifT1(AsT1);
+                    break;
+                case 2:
+                    ifT2(AsT2);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException($"Index {Index} is out of range; this Either only has {TypeCount} types.");
+            }
+        }
+
+        /// <summary>
         /// Converts the stored value of the currently selected type to a value of type T.
         /// </summary>
         /// <param name="ifT0">If the first type is selected, converts that value to type T.</param>
@@ -178,6 +227,10 @@ namespace Extra.Either
                     $"Index {Index} is out of range; this Either only has {TypeCount} types.")
             };
         }
+
+        public static implicit operator T0(Either<T0, T1, T2> either) => either.AsT0;
+        public static implicit operator T1(Either<T0, T1, T2> either) => either.AsT1;
+        public static implicit operator T2(Either<T0, T1, T2> either) => either.AsT2;
     }
 
     [Serializable]
@@ -246,6 +299,35 @@ namespace Extra.Either
         }
 
         /// <summary>
+        /// Operates on the stored value of the currently selected type.
+        /// </summary>
+        /// <param name="ifT0">If the first type is selected, operates on that value.</param>
+        /// <param name="ifT1">If the second type is selected, operates on that value.</param>
+        /// <param name="ifT2">If the third type is selected, operates on that value.</param>
+        /// <param name="ifT3">If the fourth type is selected, operates on that value.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public void Do(Action<T0> ifT0, Action<T1> ifT1, Action<T2> ifT2, Action<T3> ifT3)
+        {
+            switch (Index)
+            {
+                case 0:
+                    ifT0(AsT0);
+                    break;
+                case 1:
+                    ifT1(AsT1);
+                    break;
+                case 2:
+                    ifT2(AsT2);
+                    break;
+                case 3:
+                    ifT3(AsT3);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException($"Index {Index} is out of range; this Either only has {TypeCount} types.");
+            }
+        }
+
+        /// <summary>
         /// Converts the stored value of the currently selected type to a value of type T.
         /// </summary>
         /// <param name="ifT0">If the first type is selected, converts that value to type T.</param>
@@ -267,5 +349,10 @@ namespace Extra.Either
                     $"Index {Index} is out of range; this Either only has {TypeCount} types.")
             };
         }
+
+        public static implicit operator T0(Either<T0, T1, T2, T3> either) => either.AsT0;
+        public static implicit operator T1(Either<T0, T1, T2, T3> either) => either.AsT1;
+        public static implicit operator T2(Either<T0, T1, T2, T3> either) => either.AsT2;
+        public static implicit operator T3(Either<T0, T1, T2, T3> either) => either.AsT3;
     }
 }
