@@ -22,6 +22,7 @@ public class PlayerDefenseCalculator : MonoBehaviour
     }
 }
 ```
+![Either Demo Screenshot](https://user-images.githubusercontent.com/38191432/159398887-358422b2-47e8-4d67-ad8c-7b65c9443696.png)
 
 ## Sound Manager
 Allow for a rapid choice between a simple clip, or an extended "Sound" class, or even an atomic ScriptableObject.
@@ -61,3 +62,5 @@ public class AudioManager : MonoBehaviour
     }
 }
 ```
+![Either Sound Demo Screenshot](https://user-images.githubusercontent.com/38191432/159398910-f0681ef7-2a6f-4124-b3dd-411d41913759.png)
+
