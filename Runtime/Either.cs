@@ -41,11 +41,7 @@ namespace Extra.Either
         /// <returns>The first stored value of the given type.</returns>
         public abstract T As<T>();
 
-        /// <summary>
-        /// A helper function for pattern patching.
-        /// </summary>
-        /// <returns>The input parameter as type T.</returns>
-        public static T Self<T0, T>(T0 input) where T0 : T => input;
+        protected Either(int index = 0) => Index = index;
     }
 
     [Serializable]
@@ -66,7 +62,7 @@ namespace Extra.Either
         [field: SerializeField]
         public T1 AsT1 { get; private set; }
 
-        public Either(T0 asT0 = default, T1 asT1 = default) =>
+        public Either(int index = 0, T0 asT0 = default, T1 asT1 = default) : base(index) =>
             (AsT0, AsT1) =
             (asT0, asT1);
 
@@ -129,6 +125,9 @@ namespace Extra.Either
 
         public static implicit operator T0(Either<T0, T1> either) => either.AsT0;
         public static implicit operator T1(Either<T0, T1> either) => either.AsT1;
+
+        public static implicit operator Either<T0, T1>(T0 value) => new(0, asT0: value);
+        public static implicit operator Either<T0, T1>(T1 value) => new(1, asT1: value);
     }
 
     [Serializable]
@@ -155,7 +154,7 @@ namespace Extra.Either
         [field: SerializeField]
         public T2 AsT2 { get; private set; }
 
-        public Either(T0 asT0 = default, T1 asT1 = default, T2 asT2 = default) =>
+        public Either(int index = 0, T0 asT0 = default, T1 asT1 = default, T2 asT2 = default) : base(index) =>
             (AsT0, AsT1, AsT2) =
             (asT0, asT1, asT2);
 
@@ -231,6 +230,10 @@ namespace Extra.Either
         public static implicit operator T0(Either<T0, T1, T2> either) => either.AsT0;
         public static implicit operator T1(Either<T0, T1, T2> either) => either.AsT1;
         public static implicit operator T2(Either<T0, T1, T2> either) => either.AsT2;
+
+        public static implicit operator Either<T0, T1, T2>(T0 value) => new(0, asT0: value);
+        public static implicit operator Either<T0, T1, T2>(T1 value) => new(1, asT1: value);
+        public static implicit operator Either<T0, T1, T2>(T2 value) => new(2, asT2: value);
     }
 
     [Serializable]
@@ -265,7 +268,7 @@ namespace Extra.Either
         [field: SerializeField]
         public T3 AsT3 { get; private set; }
 
-        public Either(T0 asT0 = default, T1 asT1 = default, T2 asT2 = default, T3 asT3 = default) =>
+        public Either(int index = 0, T0 asT0 = default, T1 asT1 = default, T2 asT2 = default, T3 asT3 = default) : base(index) =>
             (AsT0, AsT1, AsT2, AsT3) =
             (asT0, asT1, asT2, asT3);
 
@@ -354,5 +357,10 @@ namespace Extra.Either
         public static implicit operator T1(Either<T0, T1, T2, T3> either) => either.AsT1;
         public static implicit operator T2(Either<T0, T1, T2, T3> either) => either.AsT2;
         public static implicit operator T3(Either<T0, T1, T2, T3> either) => either.AsT3;
+
+        public static implicit operator Either<T0, T1, T2, T3>(T0 value) => new(0, asT0: value);
+        public static implicit operator Either<T0, T1, T2, T3>(T1 value) => new(1, asT1: value);
+        public static implicit operator Either<T0, T1, T2, T3>(T2 value) => new(2, asT2: value);
+        public static implicit operator Either<T0, T1, T2, T3>(T3 value) => new(3, asT3: value);
     }
 }
