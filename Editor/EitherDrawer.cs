@@ -12,7 +12,7 @@ namespace Extra.Either
      CustomPropertyDrawer(typeof(Either<,,,>), true)]
     public class EitherDrawer : PropertyDrawer
     {
-        private static readonly float ButtonWidth = EditorGUIUtility.singleLineHeight;
+        private static readonly float ButtonSideLength = EditorGUIUtility.singleLineHeight;
         private static string AsTypePropertyName(int index) => $"<AsT{index}>k__BackingField";
 
         private string[] _popupOptions;
@@ -60,8 +60,25 @@ namespace Extra.Either
                 }
                 else
                 {
-                    EditorGUI.PropertyField(propertyRect, propertyToDraw, GUIContent.none);
+                    GUIContent propertyLabel;
+
+                    // Ensure that the button does not overlap with the property's foldout.
+                    if (propertyToDraw.hasVisibleChildren)
+                    {
+                        EditorGUIUtility.labelWidth *= 0.5f;
+                        propertyRect.xMin += ButtonSideLength * 0.5f;
+                        propertyLabel = new GUIContent($"{_popupOptions[newIndex][3..]} Foldout");
+                    }
+                    else
+                    {
+                        propertyLabel = GUIContent.none;
+                    }
+
+                    EditorGUI.PropertyField(propertyRect, propertyToDraw, propertyLabel, true);
                     _propertyHeight = EditorGUI.GetPropertyHeight(propertyToDraw, label, true);
+
+                    // Reset labelWidth to default value.
+                    EditorGUIUtility.labelWidth = 0;
                 }
             }
             EditorGUI.EndProperty();
@@ -96,10 +113,11 @@ namespace Extra.Either
             var positionNoLabel = EditorGUI.PrefixLabel(position, label);
 
             var buttonRect = positionNoLabel;
-            buttonRect.xMax = buttonRect.xMin + ButtonWidth;
+            buttonRect.xMax = buttonRect.xMin + ButtonSideLength;
+            buttonRect.yMax = buttonRect.yMin + ButtonSideLength;
 
             var propertyRect = positionNoLabel;
-            propertyRect.xMin += ButtonWidth;
+            propertyRect.xMin += ButtonSideLength;
 
             return (buttonRect, propertyRect);
         }
