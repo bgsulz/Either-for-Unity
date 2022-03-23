@@ -39,7 +39,23 @@ namespace Extra.Either
         /// </summary>
         /// <typeparam name="T">The type to locate.</typeparam>
         /// <returns>The first stored value of the given type.</returns>
-        public abstract T As<T>();
+        public abstract T ValueOfType<T>();
+
+        public abstract void DoAs<I>(Action<I> action);
+
+        protected void TryIndexDoAs<T, I>(T input, int index, Action<I> action)
+        {
+            if (input is I i) action(i);
+            else throw EitherNotInterfaceType(index, typeof(I).Name);
+        }
+
+        public abstract T MatchAs<I, T>(Func<I, T> func);
+
+        protected static ArgumentOutOfRangeException EitherIndexOutOfRange(int index, int count) =>
+            new($"Index {index} is out of range; this Either only has {count} types.");
+
+        protected static InvalidCastException EitherNotInterfaceType(int index, string interfaceName) =>
+            new($"Value of index {index} does not implement {interfaceName}.");
 
         protected Either(int index = 0) => Index = index;
     }
@@ -66,7 +82,7 @@ namespace Extra.Either
             (AsT0, AsT1) =
             (asT0, asT1);
 
-        public override T As<T>()
+        public override T ValueOfType<T>()
         {
             if (AsT0 is T t0)
             {
@@ -100,7 +116,21 @@ namespace Extra.Either
                     ifT1(AsT1);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException($"Index {Index} is out of range; this Either only has {TypeCount} types.");
+                    throw EitherIndexOutOfRange(Index, TypeCount);
+            }
+        }
+
+        public override void DoAs<I>(Action<I> action)
+        {
+            switch (Index)
+            {
+                case 0:
+                    TryIndexDoAs(AsT0, Index, action);
+                    break;
+                case 1:
+                    TryIndexDoAs(AsT1, Index, action);
+                    break;
+                default: throw EitherIndexOutOfRange(Index, TypeCount);
             }
         }
 
@@ -118,8 +148,17 @@ namespace Extra.Either
             {
                 0 => ifT0(AsT0),
                 1 => ifT1(AsT1),
-                _ => throw new ArgumentOutOfRangeException(
-                    $"Index {Index} is out of range; this Either only has {TypeCount} types.")
+                _ => throw EitherIndexOutOfRange(Index, TypeCount)
+            };
+        }
+
+        public override T MatchAs<I, T>(Func<I, T> func)
+        {
+            return Index switch
+            {
+                0 => AsT0 is I i0 ? func(i0) : throw EitherNotInterfaceType(Index, typeof(I).Name),
+                1 => AsT1 is I i1 ? func(i1) : throw EitherNotInterfaceType(Index, typeof(I).Name),
+                _ => throw EitherIndexOutOfRange(Index, TypeCount)
             };
         }
 
@@ -158,7 +197,7 @@ namespace Extra.Either
             (AsT0, AsT1, AsT2) =
             (asT0, asT1, asT2);
 
-        public override T As<T>()
+        public override T ValueOfType<T>()
         {
             if (AsT0 is T t0)
             {
@@ -202,7 +241,24 @@ namespace Extra.Either
                     ifT2(AsT2);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException($"Index {Index} is out of range; this Either only has {TypeCount} types.");
+                    throw EitherIndexOutOfRange(Index, TypeCount);
+            }
+        }
+
+        public override void DoAs<I>(Action<I> action)
+        {
+            switch (Index)
+            {
+                case 0:
+                    TryIndexDoAs(AsT0, Index, action);
+                    break;
+                case 1:
+                    TryIndexDoAs(AsT1, Index, action);
+                    break;
+                case 2:
+                    TryIndexDoAs(AsT2, Index, action);
+                    break;
+                default: throw EitherIndexOutOfRange(Index, TypeCount);
             }
         }
 
@@ -224,6 +280,17 @@ namespace Extra.Either
                 2 => ifT2(AsT2),
                 _ => throw new ArgumentOutOfRangeException(
                     $"Index {Index} is out of range; this Either only has {TypeCount} types.")
+            };
+        }
+
+        public override T MatchAs<I, T>(Func<I, T> func)
+        {
+            return Index switch
+            {
+                0 => AsT0 is I i0 ? func(i0) : throw EitherNotInterfaceType(Index, typeof(I).Name),
+                1 => AsT1 is I i1 ? func(i1) : throw EitherNotInterfaceType(Index, typeof(I).Name),
+                2 => AsT2 is I i2 ? func(i2) : throw EitherNotInterfaceType(Index, typeof(I).Name),
+                _ => throw EitherIndexOutOfRange(Index, TypeCount)
             };
         }
 
@@ -268,11 +335,12 @@ namespace Extra.Either
         [field: SerializeField]
         public T3 AsT3 { get; private set; }
 
-        public Either(int index = 0, T0 asT0 = default, T1 asT1 = default, T2 asT2 = default, T3 asT3 = default) : base(index) =>
+        public Either(int index = 0, T0 asT0 = default, T1 asT1 = default, T2 asT2 = default, T3 asT3 = default) :
+            base(index) =>
             (AsT0, AsT1, AsT2, AsT3) =
             (asT0, asT1, asT2, asT3);
 
-        public override T As<T>()
+        public override T ValueOfType<T>()
         {
             if (AsT0 is T t0)
             {
@@ -326,7 +394,27 @@ namespace Extra.Either
                     ifT3(AsT3);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException($"Index {Index} is out of range; this Either only has {TypeCount} types.");
+                    throw EitherIndexOutOfRange(Index, TypeCount);
+            }
+        }
+
+        public override void DoAs<I>(Action<I> action)
+        {
+            switch (Index)
+            {
+                case 0:
+                    TryIndexDoAs(AsT0, Index, action);
+                    break;
+                case 1:
+                    TryIndexDoAs(AsT1, Index, action);
+                    break;
+                case 2:
+                    TryIndexDoAs(AsT2, Index, action);
+                    break;
+                case 3:
+                    TryIndexDoAs(AsT3, Index, action);
+                    break;
+                default: throw EitherIndexOutOfRange(Index, TypeCount);
             }
         }
 
@@ -350,6 +438,18 @@ namespace Extra.Either
                 3 => ifT3(AsT3),
                 _ => throw new ArgumentOutOfRangeException(
                     $"Index {Index} is out of range; this Either only has {TypeCount} types.")
+            };
+        }
+
+        public override T MatchAs<I, T>(Func<I, T> func)
+        {
+            return Index switch
+            {
+                0 => AsT0 is I i0 ? func(i0) : throw EitherNotInterfaceType(Index, typeof(I).Name),
+                1 => AsT1 is I i1 ? func(i1) : throw EitherNotInterfaceType(Index, typeof(I).Name),
+                2 => AsT2 is I i2 ? func(i2) : throw EitherNotInterfaceType(Index, typeof(I).Name),
+                3 => AsT3 is I i3 ? func(i3) : throw EitherNotInterfaceType(Index, typeof(I).Name),
+                _ => throw EitherIndexOutOfRange(Index, TypeCount)
             };
         }
 
