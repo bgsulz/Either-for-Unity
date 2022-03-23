@@ -66,6 +66,8 @@ public class AudioManager : MonoBehaviour
 ## Optional Object Pool
 Effortlessly choose between plain instantiation or taking from a pool. Don't make a whole new pool just to test out a Prefab.
 
+Notice: _Look at the Instantiate method of Spawnable. Delegate responsibility to your Either-derived class for easier usage._
+
 ```cs
 using UnityEngine;
 using Extra.Either;
