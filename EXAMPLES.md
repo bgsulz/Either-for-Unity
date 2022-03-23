@@ -64,7 +64,7 @@ public class AudioManager : MonoBehaviour
 ![Either Sound Demo Screenshot](https://user-images.githubusercontent.com/38191432/159398910-f0681ef7-2a6f-4124-b3dd-411d41913759.png)
 
 ## Optional Object Pool
-Effortlessly switch between pooled and non-pooled spawning. No need to make a whole other pool to test-spawn a new Prefab.
+Effortlessly choose between plain instantiation or taking from a pool. Don't make a whole new pool just to test out a Prefab.
 
 ```cs
 using UnityEngine;
