@@ -41,6 +41,12 @@ namespace Extra.Either
         /// <returns>The first stored value of the given type.</returns>
         public abstract T ValueOfType<T>();
 
+        /// <summary>
+        /// Operates on the currently selected value as an interface.
+        /// Should be used if all types implement a common interface.
+        /// </summary>
+        /// <param name="action">The operation to execute.</param>
+        /// <typeparam name="I">The interface as which to treat the selected value.</typeparam>
         public abstract void DoAs<I>(Action<I> action);
 
         protected void TryIndexDoAs<T, I>(T input, int index, Action<I> action)
@@ -49,6 +55,14 @@ namespace Extra.Either
             else throw EitherNotInterfaceType(index, typeof(I).Name);
         }
 
+        /// <summary>
+        /// Treats the selected value as an interface and converts it to a value of type T.
+        /// Should be used if all types implement a common interface.
+        /// </summary>
+        /// <param name="func">The conversion function.</param>
+        /// <typeparam name="I">The interface as which to treat the selected value.</typeparam>
+        /// <typeparam name="T">The type to convert to.</typeparam>
+        /// <returns>The selected value converted to type T.</returns>
         public abstract T MatchAs<I, T>(Func<I, T> func);
 
         protected static ArgumentOutOfRangeException EitherIndexOutOfRange(int index, int count) =>
@@ -100,7 +114,7 @@ namespace Extra.Either
         }
 
         /// <summary>
-        /// Operates on the stored value of the currently selected type.
+        /// Operates on the selected value.
         /// </summary>
         /// <param name="ifT0">If the first type is selected, operates on that value.</param>
         /// <param name="ifT1">If the second type is selected, operates on that value.</param>
@@ -135,12 +149,12 @@ namespace Extra.Either
         }
 
         /// <summary>
-        /// Converts the stored value of the currently selected type to a value of type T.
+        /// Converts the selected value to a value of type T.
         /// </summary>
         /// <param name="ifT0">If the first type is selected, converts that value to type T.</param>
         /// <param name="ifT1">If the second type is selected, converts that value to type T.</param>
         /// <typeparam name="T">The type to convert to.</typeparam>
-        /// <returns>The stored value of the currently selected type converted to type T.</returns>
+        /// <returns>The selected value converted to type T.</returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public T Match<T>(Func<T0, T> ifT0, Func<T1, T> ifT1)
         {
@@ -221,7 +235,7 @@ namespace Extra.Either
         }
 
         /// <summary>
-        /// Operates on the stored value of the currently selected type.
+        /// Operates on the selected value.
         /// </summary>
         /// <param name="ifT0">If the first type is selected, operates on that value.</param>
         /// <param name="ifT1">If the second type is selected, operates on that value.</param>
@@ -263,13 +277,13 @@ namespace Extra.Either
         }
 
         /// <summary>
-        /// Converts the stored value of the currently selected type to a value of type T.
+        /// Converts the selected value to a value of type T.
         /// </summary>
         /// <param name="ifT0">If the first type is selected, converts that value to type T.</param>
         /// <param name="ifT1">If the second type is selected, converts that value to type T.</param>
         /// <param name="ifT2">If the third type is selected, converts that value to type T.</param>
         /// <typeparam name="T">The type to convert to.</typeparam>
-        /// <returns>The stored value of the currently selected type converted to type T.</returns>
+        /// <returns>The selected value converted to type T.</returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public T Match<T>(Func<T0, T> ifT0, Func<T1, T> ifT1, Func<T2, T> ifT2)
         {
@@ -370,7 +384,7 @@ namespace Extra.Either
         }
 
         /// <summary>
-        /// Operates on the stored value of the currently selected type.
+        /// Operates on the selected value.
         /// </summary>
         /// <param name="ifT0">If the first type is selected, operates on that value.</param>
         /// <param name="ifT1">If the second type is selected, operates on that value.</param>
@@ -419,14 +433,14 @@ namespace Extra.Either
         }
 
         /// <summary>
-        /// Converts the stored value of the currently selected type to a value of type T.
+        /// Converts the selected value to a value of type T.
         /// </summary>
         /// <param name="ifT0">If the first type is selected, converts that value to type T.</param>
         /// <param name="ifT1">If the second type is selected, converts that value to type T.</param>
         /// <param name="ifT2">If the third type is selected, converts that value to type T.</param>
         /// <param name="ifT3">If the fourth type is selected, converts that value to type T.</param>
         /// <typeparam name="T">The type to convert to.</typeparam>
-        /// <returns>The stored value of the currently selected type converted to type T.</returns>
+        /// <returns>The selected value converted to type T.</returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public T Match<T>(Func<T0, T> ifT0, Func<T1, T> ifT1, Func<T2, T> ifT2, Func<T3, T> ifT3)
         {
