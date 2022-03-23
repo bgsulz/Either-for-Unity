@@ -4,8 +4,8 @@ Share stats between GameObjects with an atomic ScriptableObject, or quickly try 
 _Inspired by Ryan Hipple's FloatReference class._
 
 ```cs
-using Extra.Either;
 using UnityEngine;
+using Extra.Either;
 
 public class PlayerDefenseCalculator : MonoBehaviour
 {
@@ -31,9 +31,8 @@ Notice: _It's easy to inherit Either to simplify data types!_
 
 ```cs
 using System;
-using Extra.Audio;
-using Extra.Either;
 using UnityEngine;
+using Extra.Either;
 
 public class AudioManager : MonoBehaviour
 {
@@ -64,3 +63,37 @@ public class AudioManager : MonoBehaviour
 ```
 ![Either Sound Demo Screenshot](https://user-images.githubusercontent.com/38191432/159398910-f0681ef7-2a6f-4124-b3dd-411d41913759.png)
 
+## Optional Object Pool
+Effortlessly switch between pooled and non-pooled spawning. No need to make a whole other pool to test-spawn a new Prefab.
+
+```cs
+using UnityEngine;
+using Extra.Either;
+
+[Serializable] 
+public class Spawnable : Either<GameObject, PoolableBehaviour> 
+{
+    public void Instantiate(Vector3 position = default, Quaternion rotation = default)
+    {
+        if (rotation == default) rotation = Quaternion.identity;
+
+        Do(
+            go => Object.Instantiate(go, position, rotation)
+            poolable => PoolManager.InstantiateOfType(poolable, position, rotation)
+        );
+    }
+}
+
+//
+
+public class ParticleSpawner : MonoBehaviour
+{
+    [SerializeField] private Spawnable hitParticles;
+
+    public void Spawn()
+    {
+        hitParticles.Instantiate(transform.position);
+    }
+}
+
+```
