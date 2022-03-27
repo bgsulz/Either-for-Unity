@@ -23,9 +23,9 @@ public class PlayerDefenseCalculator : MonoBehaviour
 }
 ```
 
-## [See Examples](https://github.com/bgsulz/Either-for-Unity/blob/main/EXAMPLES.md)
+#### [See Examples](https://github.com/bgsulz/Either-for-Unity/blob/main/EXAMPLES.md)
 
-## [Read FAQ](https://github.com/bgsulz/Either-for-Unity/blob/main/FAQ.md)
+#### [Read FAQ](https://github.com/bgsulz/Either-for-Unity/blob/main/FAQ.md)
 
 ## How do I add this to Unity?
 It's easy!
