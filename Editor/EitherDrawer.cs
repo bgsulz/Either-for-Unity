@@ -13,7 +13,7 @@ namespace Extra.Either
     public class EitherDrawer : PropertyDrawer
     {
         private static readonly float ButtonSideLength = EditorGUIUtility.singleLineHeight;
-        private static string AsTypePropertyName(int index) => $"<AsT{index}>k__BackingField";
+        private static string AsTypePropertyName(int index) => $"asT{index}";
 
         private string[] _popupOptions;
         private GUIStyle _popupStyle;
