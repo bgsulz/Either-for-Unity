@@ -1,6 +1,9 @@
 # Either for Unity
 A Serializable union-esque type for Unity.
 
+| [See Examples](https://github.com/bgsulz/Either-for-Unity/blob/main/EXAMPLES.md) | [Read FAQ](https://github.com/bgsulz/Either-for-Unity/blob/main/FAQ.md) |
+|---|---|
+
 ![Either Demo Screenshot](https://user-images.githubusercontent.com/38191432/159367481-41640d75-8610-41f0-9cec-003de6d0a36f.png)
 
 ```cs
@@ -22,9 +25,6 @@ public class PlayerDefenseCalculator : MonoBehaviour
     }
 }
 ```
-
-| [See Examples](https://github.com/bgsulz/Either-for-Unity/blob/main/EXAMPLES.md) | [Read FAQ](https://github.com/bgsulz/Either-for-Unity/blob/main/FAQ.md) |
-|---|---|
 
 ## How do I add this to Unity?
 It's easy!
