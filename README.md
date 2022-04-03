@@ -16,9 +16,9 @@ public class PlayerDefenseCalculator : MonoBehaviour
 
     public float EvaluateDamage(float attackPower)
     {
-        var defense = defenseStat.Match(
-            f => f,
-            so => so.FloatValue
+        float defense = defenseStat.Match<float>(
+            ifFloat => ifFloat,
+            ifSO => ifSO.FloatValue
         );
 
         return attackPower - defense;
