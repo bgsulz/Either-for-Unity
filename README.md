@@ -32,7 +32,7 @@ It's easy!
 #### If you have Git...
 1. Open the Unity Editor. On the top ribbon, click Window > Package Manager.
 2. Click the + button in the upper left corner, and click "Add package from git url..."
-3. Enter "https://github.com/bgsulz/Get-for-Unity.git"
+3. Enter "https://github.com/bgsulz/Either-for-Unity.git"
 4. Enjoy!
 
 #### If you don't have Git (or want to modify the code)...
