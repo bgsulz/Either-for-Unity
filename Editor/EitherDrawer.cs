@@ -1,6 +1,7 @@
 ﻿#if UNITY_EDITOR
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEditor;
@@ -63,7 +64,7 @@ namespace Extra.Either
                     GUIContent propertyLabel;
 
                     // Ensure that the button does not overlap with the property's foldout.
-                    if (propertyToDraw.hasVisibleChildren)
+                    if (propertyToDraw.hasVisibleChildren && propertyToDraw.isExpanded)
                     {
                         EditorGUIUtility.labelWidth *= 0.5f;
                         propertyRect.xMin += ButtonSideLength * 0.5f;
@@ -93,7 +94,7 @@ namespace Extra.Either
             };
 
             // Transform type Either's "TypeNames" property by prepending each entry with "As ".
-            popupOptions ??= propertyValue.TypeNames.Select(i => $"As {i}").ToArray();
+            popupOptions ??= CountedNames(propertyValue.TypeNames.Select(i => $"As {i}").ToArray());
         }
 
         private static SerializedProperty[] GatherSerializedProperties(SerializedProperty property, int typeCount)
@@ -120,6 +121,30 @@ namespace Extra.Either
             propertyRect.xMin += ButtonSideLength;
 
             return (buttonRect, propertyRect);
+        }
+
+        private static string[] CountedNames(string[] input)
+        {
+            var res = new List<string>(input.Length);
+
+            var indexTrackerDictionary = input
+                .GroupBy(item => item)
+                .Where(item => item.Count() > 1)
+                .ToDictionary(item => item.Key, _ => 0);
+
+            foreach (var item in input)
+            {
+                if (!indexTrackerDictionary.TryGetValue(item, out var value)) // If not a duplicate...
+                {
+                    res.Add(item); // We don't care.
+                    continue;
+                }
+
+                indexTrackerDictionary[item] = ++value; // We've now encountered this item {value} times.
+                res.Add($"{item} [{value - 1}]");
+            }
+
+            return res.ToArray();
         }
     }
 }
