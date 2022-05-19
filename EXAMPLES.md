@@ -65,7 +65,7 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private SoundData coinSound;
 
-    private void Start() => Play(coinSound, GetComponent<AudioSource>());
+    private void Start() => coinSound.Play(GetComponent<AudioSource>());
 }
 ```
 ![Either Sound Demo Screenshot](https://user-images.githubusercontent.com/38191432/159398910-f0681ef7-2a6f-4124-b3dd-411d41913759.png)
