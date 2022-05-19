@@ -49,14 +49,8 @@ public class AudioManager : MonoBehaviour
             source.Play();
         }
 
-        public void ConfigureSource(AudioSource source)
+        public static void ConfigureSource(AudioSource source, Sound sound)
         {
-            var sound = Match(
-                clip => new Sound(clip),
-                sound => sound,
-                soundSO => soundSO.Value
-            );
-            
             source.clip = sound.Clip;
             source.volume = sound.Volume;
             source.pitch = sound.Pitch;
