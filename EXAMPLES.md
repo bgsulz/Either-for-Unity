@@ -5,6 +5,8 @@
 | [Optional Object Pool](#optional-object-pool) |
 | [Generic Pseudo-Varargs](#generic-pseudo-varargs) |
 
+***
+
 ## Player Stats
 Share stats between GameObjects with an atomic ScriptableObject, or quickly try out a new constant value.
 
