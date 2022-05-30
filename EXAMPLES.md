@@ -100,3 +100,45 @@ public class ParticleSpawner : MonoBehaviour
 }
 
 ```
+
+## Generic Pseudo-Varargs
+
+The `Optional<T>` utility type allows for pseudo-optional parameters as generic arguments. Use the `None.Instance` property to simulate passing in no argument.
+
+```cs
+using Extra.Chips;
+using Extra.Either;
+using UnityEngine;
+
+public class SpawnParticleEvent : ScriptableObjectEvent<ParticleSystem, Optional<Vector3>> { }
+
+public class DamageController : MonoBehaviour
+{
+    [SerializeField] private SpawnParticleEvent channel;
+    [SerializeField] private ParticleSystem hurtParticles, screenParticles;
+
+    public void Damage()
+    {
+        channel.Invoke(hurtParticles, transform.position);
+        channel.Invoke(screenParticles, None.Instance);
+    }
+}
+
+public class ParticleSpawner : MonoBehaviour
+{
+    [SerializeField] private SpawnParticleEvent channel;
+
+    private void OnEnable() => channel.AddListener(SpawnParticles);
+    private void OnDisable() => channel.RemoveListener(SpawnParticles);
+
+    private void SpawnParticles(ParticleSystem particles, Optional<Vector3> maybePosition)
+    {
+        var position = maybePosition.Match(
+            v3 => v3,
+            none => Vector3.zero
+        );
+
+        Instantiate(particles, position, Quaternion.identity);
+    }
+}
+```
