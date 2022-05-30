@@ -106,7 +106,6 @@ public class ParticleSpawner : MonoBehaviour
 The `Optional<T>` utility type allows for pseudo-optional parameters as generic arguments. Use the `None.Instance` property to simulate passing in no argument.
 
 ```cs
-using Extra.Chips;
 using Extra.Either;
 using UnityEngine;
 
