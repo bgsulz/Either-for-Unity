@@ -36,29 +36,30 @@ using Extra.Either;
 
 public class AudioManager : MonoBehaviour
 {
-    [Serializable] public class SoundData : Either<AudioClip, Sound, SoundScriptableObject> { }
+    [Serializable] public class SoundData : Either<AudioClip, Sound, SoundScriptableObject> 
+    {
+        public void Play(AudioSource source)
+        {
+            Do(
+                clip => source.clip = clip,
+                sound => ConfigureSource(source, sound),
+                soundSO => ConfigureSource(source, soundSO.Value)
+            );
+
+            source.Play();
+        }
+
+        public static void ConfigureSource(AudioSource source, Sound sound)
+        {
+            source.clip = sound.Clip;
+            source.volume = sound.Volume;
+            source.pitch = sound.Pitch;
+        }   
+    }
 
     [SerializeField] private SoundData coinSound;
 
-    private void Start() => Play(coinSound, GetComponent<AudioSource>());
-
-    public static void Play(SoundData soundData, AudioSource source)
-    {
-        soundData.Do(
-            clip => source.clip = clip,
-            sound => ConfigureSource(source, sound),
-            soundSO => ConfigureSource(source, soundSO.Value)
-        );
-
-        source.Play();
-    }
-
-    public static void ConfigureSource(AudioSource source, Sound sound)
-    {
-        source.clip = sound.Clip;
-        source.volume = sound.Volume;
-        source.pitch = sound.Pitch;
-    }
+    private void Start() => coinSound.Play(GetComponent<AudioSource>());
 }
 ```
 ![Either Sound Demo Screenshot](https://user-images.githubusercontent.com/38191432/159398910-f0681ef7-2a6f-4124-b3dd-411d41913759.png)
