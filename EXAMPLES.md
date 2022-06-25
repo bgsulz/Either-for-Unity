@@ -114,6 +114,10 @@ public class ParticleSpawner : MonoBehaviour
 
 The `Optional<T>` utility type allows for pseudo-optional parameters as generic arguments. Use the `None.Instance` property to simulate passing in no argument.
 
+#### How is this different from `Nullable<T>`?
+
+Like Maybe or Option types from functional languages, `Optional<T>` enforces handling the None case, resulting in stabler code with less NullReferenceExceptions.
+
 ```cs
 using Extra.Either;
 using UnityEngine;
