@@ -1,10 +1,16 @@
 # Either for Unity
-A Serializable union-esque type for Unity.
+
+**Serializable union-esque type for Unity.** Unify Components that 
 
 | [Examples](https://github.com/bgsulz/Either-for-Unity/blob/main/EXAMPLES.md) | [FAQ](https://github.com/bgsulz/Either-for-Unity/blob/main/FAQ.md) |
 |---|---|
 
 ![Either Demo Screenshot](https://user-images.githubusercontent.com/38191432/159367481-41640d75-8610-41f0-9cec-003de6d0a36f.png)
+
+## Quick start guide
+Use the type in serialized fields -- or for anything else you want, like return types or parameters!
+
+As its "selected type" is unknown at runtime, use its built-in `Match` method to convert it to a common type, or its `Do` method to perform different operations based on its selected type.
 
 ```cs
 using Extra.Either;
